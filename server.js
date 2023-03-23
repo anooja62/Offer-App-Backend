@@ -10,7 +10,7 @@ const app = express();
 const port = 8000;
 dotenv.config();
 app.use(express.json());
-app.use(Cors({origin:['https://localhost:300','https://offer-create-app.onrender.com/']}));
+app.use(Cors({origin:['https://localhost:3000','https://offer-create-app.onrender.com/']}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.set("strictQuery", false);
