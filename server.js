@@ -55,6 +55,7 @@ app.post("/offers", async (req, res) => {
 app.get("/all-offers", async (req, res) => {
     try {
       const offers = await Offer.find();
+      res.setHeader("Access-Control-Allow-Credentials", "true");
       res.status(200).json(offers);
     } catch (err) {
       res.status(500).json({ message: err.message });
