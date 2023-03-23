@@ -10,7 +10,14 @@ const app = express();
 const port = 8000;
 dotenv.config();
 app.use(express.json());
-app.use(Cors({origin:['https://localhost:3000','https://offer-create-app.onrender.com/']}));
+app.use(
+  Cors({
+    origin: [
+      "https://localhost:3000",
+      "https://offer-create-app.onrender.com/",
+    ],
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.set("strictQuery", false);
@@ -24,10 +31,14 @@ mongoose
   .then(() => console.log("connected  to mongodb !!"))
 
   .catch((err) => console.log(err.message));
-app.get("/",async(req,res)=>{
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.send('API is running')
-})
+app.get("/", async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.send("API is running");
+});
 app.post("/offers", async (req, res) => {
   try {
     const offer = new Offer({
@@ -47,24 +58,31 @@ app.post("/offers", async (req, res) => {
       usagePerCustomers: req.body.usagePerCustomers,
     });
     const newOffer = await offer.save();
-    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
     res.status(201).json(newOffer);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 app.get("/all-offers", async (req, res) => {
-    try {
-      const offers = await Offer.find();
-      res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-     
-      res.status(200).json(offers);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  });
-  
+  try {
+    const offers = await Offer.find();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+
+    res.status(200).json(offers);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`listening in : ${port}`);
 });
