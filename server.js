@@ -47,6 +47,7 @@ app.post("/offers", async (req, res) => {
       usagePerCustomers: req.body.usagePerCustomers,
     });
     const newOffer = await offer.save();
+    res.setHeader("Access-Control-Allow-Credentials", "true");
     res.status(201).json(newOffer);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -55,7 +56,9 @@ app.post("/offers", async (req, res) => {
 app.get("/all-offers", async (req, res) => {
     try {
       const offers = await Offer.find();
-      res.setHeader("Access-Control-Allow-Credentials", "true");
+      res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+     
       res.status(200).json(offers);
     } catch (err) {
       res.status(500).json({ message: err.message });
