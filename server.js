@@ -24,7 +24,10 @@ mongoose
   .then(() => console.log("connected  to mongodb !!"))
 
   .catch((err) => console.log(err.message));
-
+app.get("/",async(req,res)=>{
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.send('API is running')
+})
 app.post("/offers", async (req, res) => {
   try {
     const offer = new Offer({
