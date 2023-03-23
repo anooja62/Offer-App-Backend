@@ -14,7 +14,7 @@ app.use(
   Cors({
     origin: [
       "https://localhost:3000",
-      "https://offer-create-app.onrender.com/",
+      "https://offer-create-app.onrender.com",
     ],
   })
 );
